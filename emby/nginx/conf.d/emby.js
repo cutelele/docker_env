@@ -42,5 +42,29 @@ async function redirect2Pan(r) {
     r.internalRedirect("@backend");
     return;
 }
-
+async function fetchEmbyFilePath(itemInfoUri) {
+    try {
+        const res = await ngx.fetch(itemInfoUri, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'Content-Length': 0,
+            },
+            max_response_body_size: 65535,
+        });
+        if (res.ok) {
+            const result = await res.json();
+            if (result === null || result === undefined) {
+                return `error: emby_api itemInfoUri response is null`;
+            }
+            return result.MediaSources[0].Path;
+        }
+        else {
+            return (`error: emby_api ${res.status} ${res.statusText}`);
+        }
+    }
+    catch (error) {
+        return (`error: emby_api fetch mediaItemInfo failed,  ${error}`);
+    }
+}
 export default { redirect2Pan };
