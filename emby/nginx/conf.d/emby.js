@@ -1,6 +1,7 @@
 //查看日志: "docker logs -f -n 10 emby-nginx 2>&1  | grep js:"
 async function redirect2Pan(r) {
     //fetch mount emby/jellyfin file path
+    const embyHost = 'http://172.20.0.1:8096';
     const regex = /[A-Za-z0-9]+/g;
     const itemId = r.uri.replace('emby', '').replace(/-/g, '').match(regex)[1]; 
     const mediaSourceId = r.args.MediaSourceId;
