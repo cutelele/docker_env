@@ -28,7 +28,7 @@ async function redirect2Pan(r) {
 
     if (!embyRes.startsWith('error')) {
         r.warn(`redirect to: ${embyRes}`);
-        if(my_xiaoya_addr!=""&&rep_text!=""){
+        if(my_xiaoya_addr!=""&&rep_text!=""){//此处判断是否需要地址转换
             embyRes = embyRes.replace(rep_text, my_xiaoya_addr);
         }
         r.return(302, embyRes);
