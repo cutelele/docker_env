@@ -18,7 +18,7 @@ async function redirect2Pan(r) {
 
     const itemInfoUri = `${embyHost}/Items/${itemId}/PlaybackInfo?MediaSourceId=${mediaSourceId}&api_key=${api_key}`;
     r.warn(`itemInfoUri: ${itemInfoUri}`);
-    const embyRes = await fetchEmbyFilePath(itemInfoUri);
+    let embyRes = await fetchEmbyFilePath(itemInfoUri);
     if (embyRes.startsWith('error')) {
         r.error(embyRes);
         r.return(500, embyRes);
