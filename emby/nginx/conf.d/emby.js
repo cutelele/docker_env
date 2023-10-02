@@ -27,15 +27,8 @@ async function redirect2Pan(r) {
     r.warn(`mount emby file path: ${embyRes}`);
 
     if (!embyRes.startsWith('error')) {
-        r.warn(`redirect to src: ${embyRes}`);
         if(my_xiaoya_addr!=""&&rep_text!=""){//此处判断是否需要地址转换
-            r.warn(`used if`);
-            try{
-                embyRes = embyRes.replace(rep_text, my_xiaoya_addr);
-            }catch(error){
-                r.warn(`error = ${error}`);
-            }
-            r.warn(`used if addr:${embyRes}`);
+            embyRes = embyRes.replace(rep_text, my_xiaoya_addr);
         }
         r.warn(`redirect to end: ${embyRes}`);
         r.return(302, embyRes);
