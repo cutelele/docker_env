@@ -1,8 +1,8 @@
 //查看日志: "docker logs -f -n 10 emby-nginx 2>&1  | grep js:"
 async function redirect2Pan(r) {
     //fetch mount emby/jellyfin file path
-    const my_xiaoya_addr = "http://xxxxxxx:5678";//如需关闭地址转换此处请留空
-    const rep_text = "DOCKER_ADDRESS";//如需关闭地址转换此处请留空
+    const my_xiaoya_addr = "http://xxxxxxx:5678";//如需关闭地址转换此处请留空 例: const my_xiaoya_addr = "";
+    const rep_text = "DOCKER_ADDRESS";//如需关闭地址转换此处请留空 例: const rep_text = "";
     //以上两处变量同时配置,方可启用地址转换功能.
     const embyHost = 'http://172.20.0.1:8096';
     const regex = /[A-Za-z0-9]+/g;
