@@ -1,6 +1,8 @@
 //查看日志: "docker logs -f -n 10 emby-nginx 2>&1  | grep js:"
 async function redirect2Pan(r) {
     //fetch mount emby/jellyfin file path
+    const my_xiaoya_addr = "http://xxxxxxx:5678";
+    const rep_text = "DOCKER_ADDRESS";
     const embyHost = 'http://172.20.0.1:8096';
     const regex = /[A-Za-z0-9]+/g;
     const itemId = r.uri.replace('emby', '').replace(/-/g, '').match(regex)[1]; 
@@ -25,6 +27,7 @@ async function redirect2Pan(r) {
 
     if (!embyRes.startsWith('error')) {
         r.warn(`redirect to: ${embyRes}`);
+        embyRes = embyRes.replace(rep_text, my_xiaoya_addr);
         r.return(302, embyRes);
         return;
     }
