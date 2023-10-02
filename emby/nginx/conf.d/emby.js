@@ -27,7 +27,9 @@ async function redirect2Pan(r) {
 
     if (!embyRes.startsWith('error')) {
         r.warn(`redirect to: ${embyRes}`);
-        embyRes = embyRes.replace(rep_text, my_xiaoya_addr);
+        if(my_xiaoya_addr!=""&&rep_text!=""){
+            embyRes = embyRes.replace(rep_text, my_xiaoya_addr);
+        }
         r.return(302, embyRes);
         return;
     }
