@@ -1,7 +1,7 @@
 //查看日志: "docker logs -f -n 10 emby-nginx 2>&1  | grep js:"
 async function redirect2Pan(r) {
 
-    //多个地址负载均衡地址之间请用“,”隔开 例:const my_xiaoya_addr = "http://aaaaaa:5678,http://bbbbb:5678";,
+    //多个地址负载均衡,地址之间请用“,”隔开 例:const my_xiaoya_addr = "http://aaaaaa:5678,http://bbbbb:5678";,
     const my_xiaoya_addr = "http://aaaaaa:5678";//默认配单地址方式,如需关闭地址转换此处请留空 例: const my_xiaoya_addr = "";
     const rep_text = "DOCKER_ADDRESS";//如需关闭地址转换此处请留空 例: const rep_text = "";
     //以上两处变量同时配置,方可启用地址转换功能.
