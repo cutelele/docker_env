@@ -1,7 +1,7 @@
 //查看日志: "docker logs -f -n 10 emby-nginx 2>&1  | grep js:"
 async function redirect2Pan(r) {
 
-    //多个地址负载均衡,地址之间请用“,”隔开 例:const my_xiaoya_addr = "http://aaaaaa:5678,http://bbbbb:5678";,
+    //多个地址负载均衡,地址之间请用“|”隔开 例:const my_xiaoya_addr = "http://aaaaaa:5678|http://bbbbb:5678";
     const my_xiaoya_addr = "http://aaaaaa:5678";//默认兼容单地址方式,如需关闭地址转换此处请留空 例: const my_xiaoya_addr = "";
     const rep_text = "DOCKER_ADDRESS";//如需关闭地址转换此处请留空 例: const rep_text = "";
     //以上两处变量同时配置,方可启用地址转换功能.
@@ -29,7 +29,7 @@ async function redirect2Pan(r) {
 
     if (!embyRes.startsWith('error')) {
         if(my_xiaoya_addr!=""&&rep_text!=""){//此处判断是否需要地址转换
-            let addrs = my_xiaoya_addr.split(",");
+            let addrs = my_xiaoya_addr.split("|");
             let randomIndex = Math.floor(Math.random() * addrs.length);//随机方式负载均衡
             embyRes = embyRes.replace(rep_text, addrs[randomIndex]);
         }
