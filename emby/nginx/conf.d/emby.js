@@ -37,8 +37,9 @@ async function redirect2Pan(r) {
                 r.return(302, embyRes);
                 return;
             }else{//兼容emby本地库,不做302跳转
-                r.warn(`redirect to 200: ${r}`);
-                return ngx.fetch(r);
+                r.warn(`redirect to source path`);
+                r.internalRedirect("@backend")
+                return;
             }
         }
         //运行到此处说明用户自己搞定了.strm内容替换,这里直接302,如果这种情况下还需要对emby本地库进行支持,建议走转换配置
