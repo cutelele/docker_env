@@ -35,9 +35,11 @@ async function redirect2Pan(r) {
                 embyRes = embyRes.replace(rep_text, addrs[randomIndex]);
                 r.warn(`redirect to 302: ${embyRes}`);
                 r.return(302, embyRes);
+                return;
             }else{//兼容emby本地库,不做302跳转
                 r.warn(`redirect to 200: ${embyRes}`);
                 r.return(200, embyRes); 
+                return;
             }
         }
         //运行到此处说明用户自己搞定了.strm内容替换,这里直接302,如果这种情况下还需要对emby本地库进行支持,建议走转换配置
