@@ -41,7 +41,7 @@ async function redirect2Pan(r) {
             }
         }
         //运行到此处说明用户自己搞定了.strm内容替换,这里直接302,如果这种情况下还需要对emby本地库进行支持,建议走转换配置
-        //把my_xiaoya_addr和rep_text配置成和.strm一致的地址,利用不改变.strm实际内容但又跑了转换逻辑,达到筛选出emby本地库并进行支持的目的.
+        //把my_xiaoya_addr和rep_text配置成和strm文件一致的地址前缀,利用不改变strm实际内容但又跑了转换逻辑,达到筛选出emby本地库并进行支持的目的.
         r.warn(`redirect not trans to 302: ${embyRes}`);
         r.return(302, embyRes);
         return;
