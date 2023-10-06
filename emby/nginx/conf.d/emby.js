@@ -5,7 +5,7 @@ async function redirect2Pan(r) {
     const my_xiaoya_addr = "http://xxxxxxx:5678";//默认兼容单地址方式,如需关闭地址转换此处请留空 例: const my_xiaoya_addr = "";
     const rep_text = "DOCKER_ADDRESS";//如需关闭地址转换此处请留空 例: const rep_text = "";
     //以上两处变量同时配置,方可启用地址转换功能.
-    const embyHost = 'http://172.20.0.1:8096';
+    const embyHost = 'http://192.168.3.11:8096';
     const regex = /[A-Za-z0-9]+/g;
     const itemId = r.uri.replace('emby', '').replace(/-/g, '').match(regex)[1]; 
     const mediaSourceId = r.args.MediaSourceId;
@@ -13,7 +13,7 @@ async function redirect2Pan(r) {
 
     //infuse用户需要填写下面的api_key, 感谢@amwamw968
     if ((api_key === null) || (api_key === undefined)) {
-        api_key = '34665a2b42e5456a9011dc2c7accc445';//这里填自己的emby/jellyfin API KEY
+        api_key = 'df306dbc4c484e538207cae938cc98ec';//这里填自己的emby/jellyfin API KEY
         r.warn(`api key for Infuse: ${api_key}`);
     }
 
@@ -29,23 +29,18 @@ async function redirect2Pan(r) {
 
     if (!embyRes.startsWith('error')) {
         if(my_xiaoya_addr!=""&&rep_text!=""){//此处判断是否需要地址转换
-            if (embyRes.indexOf(rep_text)!=-1){
-                let addrs = my_xiaoya_addr.split("|");
-                let randomIndex = Math.floor(Math.random() * addrs.length);//随机方式负载均衡
-                embyRes = embyRes.replace(rep_text, addrs[randomIndex]);
-                r.warn(`redirect to 302: ${embyRes}`);
-                r.return(302, embyRes);
-                return;
-            }else{//兼容emby本地库,不做302跳转
-                r.warn(`redirect to source path`);
-                r.internalRedirect("@backend")
-                return;
-            }
+            let addrs = my_xiaoya_addr.split("|");
+            let randomIndex = Math.floor(Math.random() * addrs.length);//随机方式负载均衡
+            embyRes = embyRes.replace(rep_text, addrs[randomIndex]);
+            r.warn(`embyRes replace end: ${embyRes}`);
         }
-        //运行到此处说明用户自己搞定了.strm内容替换,这里直接302,如果这种情况下还需要对emby本地库进行支持,建议走转换配置
-        //把my_xiaoya_addr和rep_text配置成和strm文件一致的地址前缀,利用不改变strm实际内容但又跑了转换逻辑,达到筛选出emby本地库并进行支持的目的.
-        r.warn(`redirect not trans to 302: ${embyRes}`);
-        r.return(302, embyRes);
+        if(embyRes.indexOf("http")!=-1){//兼容chas既有DOCKER_ADDRESS又有真实地址的情况
+            r.warn(`redirect to 302: ${embyRes}`);
+            r.return(302, embyRes);
+            return;
+        }
+        r.warn(`redirect to source path`);
+        r.internalRedirect("@backend")
         return;
     }
     if (embyRes.startsWith('error401')) {
