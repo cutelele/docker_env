@@ -1,4 +1,4 @@
-//查看日志: "docker logs -f -n 10 emby-nginx 2>&1  | grep js:"
+//查看日志: "docker logs -f -n 10 nginx 2>&1  | grep js:"
 async function redirect2Pan(r) {
 
     //多个地址负载均衡,地址之间请用“|”隔开 例:const my_xiaoya_addr = "http://aaaaaa:5678|http://bbbbb:5678";注意最后的地址不要带“|”
@@ -34,13 +34,13 @@ async function redirect2Pan(r) {
             embyRes = embyRes.replace(rep_text, addrs[randomIndex]);
             r.warn(`embyRes replace end: ${embyRes}`);
         }
-        if(embyRes.indexOf("http")!=-1){//兼容chas既有DOCKER_ADDRESS又有真实地址的情况
+        if (embyRes.indexOf("http")!=-1){
             r.warn(`redirect to 302: ${embyRes}`);
             r.return(302, embyRes);
             return;
         }
         r.warn(`redirect to source path`);
-        r.internalRedirect("@backend")
+        r.internalRedirect("@backend");
         return;
     }
     if (embyRes.startsWith('error401')) {
