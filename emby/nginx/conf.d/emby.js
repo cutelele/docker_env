@@ -5,8 +5,10 @@ const rep_text = "DOCKER_ADDRESS";//如需关闭地址转换此处请留空 例:
 //以上两处变量同时配置,方可启用地址转换功能.
 const embyHost = 'http://172.20.0.2:8096';
 async function redirect2Pan(r) {
-
-
+	if(r.uri.indexOf("Subtitles")!=-1){
+        r.internalRedirect("@backend");
+        return;
+    }
     const regex = /[A-Za-z0-9]+/g;
     const itemId = r.uri.replace('emby', '').replace(/-/g, '').match(regex)[1]; 
     const mediaSourceId = r.args.MediaSourceId;
