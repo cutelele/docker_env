@@ -34,8 +34,8 @@ async function redirect2Pan(r) {
     if (!embyRes.startsWith('error')) {
         embyRes =transferStr(embyRes);
         if (embyRes.indexOf("http")!=-1){
-            r.warn(`redirect to 302: ${encodeURI(embyRes)}`);
-            r.return(302, `${encodeURI(embyRes)}`);
+            r.warn(`redirect to 302: ${embyRes}`);
+            r.return(302, `${embyRes}`);
             return;
         }
         r.warn(`redirect to source path`);
